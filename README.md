@@ -14,12 +14,6 @@ https://wiki.samba.org/index.php/Setting_up_Samba_as_an_Active_Directory_Domain_
  - 53 88 135 139 389 445 464 636 1024-5000 
  - 53/udp 88/udp 137/udp 138/udp 389/udp 464/udp
 
-### Environment Variables
- - RG_ACT_TOKEN   Token from Cloudflare Portal
- - RG_ACT_HOST    External IP address of Host
- - RG_LOG_LEVEL   Logging Level : default: 1
- - RG_WAN_PORT    External Port : default: 2408
- 
 ### Command Line
  ``` 
 # automatic provisioning
