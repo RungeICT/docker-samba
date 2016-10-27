@@ -1,11 +1,27 @@
-# docker-samba
+# rungeict/samba-dc
+Alpine image with Samba DC installed
 
-A basic Alpine image with samba dc installed designed to be used for Samba Active Directory Services
+## Introduction
+Since version 4.0, Samba can, additionally to a NT4 PDC, act as a Domain Controller that is compatible with Microsoft Active Directory. In the following, we explain how to set up Samba as an Active Directory Domain Controller from scratch. In addition, this documentation is the start for upgrading an existing Samba NT4-style domain to a Samba AD.
 
-[https://wiki.samba.org/index.php/Setup_a_Samba_Active_Directory_Domain_Controller]
+Whilst the Domain Controller seems capable of running as a full file server, it is suggested that organisations run a distinct file server to allow upgrades of each without disrupting the other. It is also suggested that medium-sized sites should run more than one DC. It also makes sense to have the DC's distinct from any file servers that may use the Domain Controllers. Additionally using distinct file servers avoids the idiosyncrasies in the winbindd configuration on the Active Directory Domain Controller. The Samba team does not recommend using a Samba-based Domain Controller as a file server, and recommend that users run a separate Domain Member with file shares.
 
-see the following for commands on how to use. this requires a local mapping or a shared container volume.
-```
+https://wiki.samba.org/index.php/Setting_up_Samba_as_an_Active_Directory_Domain_Controller
+
+## Deployment
+
+### Ports
+ - 53 88 135 139 389 445 464 636 1024-5000 
+ - 53/udp 88/udp 137/udp 138/udp 389/udp 464/udp
+
+### Environment Variables
+ - RG_ACT_TOKEN   Token from Cloudflare Portal
+ - RG_ACT_HOST    External IP address of Host
+ - RG_LOG_LEVEL   Logging Level : default: 1
+ - RG_WAN_PORT    External Port : default: 2408
+ 
+### Command Line
+ ``` 
 # automatic provisioning
 docker run --rm -it \
   -v $LOCAL/samba/etc/:/etc/samba/ \
@@ -55,7 +71,6 @@ docker exec -it samba-ad smbclient //localhost/netlogon -UAdministrator -c 'ls'
 
 # this wont work, bind-utils are not installed
 docker exec -it samba-ad host -t SRV _ldap._tcp.example.com.
-
 ```
 
 ## TODO
